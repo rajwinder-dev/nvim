@@ -4,3 +4,5 @@
 -- Force the LSP to stay at the directory where you opened Neovim
 --
 vim.g.root_spec = { "cwd" }
+
+vim.lsp.inlay_hint.enable(false)
