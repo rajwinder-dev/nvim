@@ -10,7 +10,7 @@ return {
 
       -- This turns on your preferred inline ghost text style
       virtual_text = {
-        enabled = true,
+        enabled = false,
         key_bindings = {
           accept = "<Tab>", -- Press Tab to accept the inline suggestion
           clear = "<C-x>", -- Press Ctrl + x to dismiss it
