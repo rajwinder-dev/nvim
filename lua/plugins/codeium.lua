@@ -5,12 +5,9 @@ return {
   },
   config = function()
     require("codeium").setup({
-      -- This fixes your "module 'cmp' not found" error permanently
       enable_cmp_source = false,
-
-      -- This turns on your preferred inline ghost text style
       virtual_text = {
-        enabled = false,
+        enabled = true,
         key_bindings = {
           accept = "<Tab>", -- Press Tab to accept the inline suggestion
           clear = "<C-x>", -- Press Ctrl + x to dismiss it

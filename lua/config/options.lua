@@ -6,3 +6,4 @@
 vim.g.root_spec = { "cwd" }
 
 vim.lsp.inlay_hint.enable(false)
+
