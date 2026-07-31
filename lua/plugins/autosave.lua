@@ -4,9 +4,9 @@ return {
     event = { "InsertEnter", "TextChanged" },
     opts = {
       enabled = true,
-      debounce_delay = 1500,
+      debounce_delay = 5000,
       trigger_events = {
-        defer_save = { "TextChanged" },
+        defer_save = {},
         immediate_save = { "FocusLost", "BufLeave", "QuitPre" },
       },
     },
