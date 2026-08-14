@@ -7,7 +7,7 @@ return {
       debounce_delay = 5000,
       trigger_events = {
         defer_save = {},
-        immediate_save = { "FocusLost", "BufLeave", "QuitPre" },
+        immediate_save = { "BufLeave", "QuitPre" },
       },
     },
   },

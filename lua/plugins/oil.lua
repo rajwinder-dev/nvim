@@ -14,7 +14,7 @@ return {
       -- "mtime",
     },
     -- Buffer-local options to use for oil buffers
-    buf_options = {
+   buf_options = {
       buflisted = false,
       bufhidden = "hide",
     },
