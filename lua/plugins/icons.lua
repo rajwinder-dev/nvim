@@ -2,364 +2,170 @@ return {
   {
     "echasnovski/mini.icons",
 
-    init = function()
-      vim.filetype.add({
-        pattern = {
-          -- ============================================================
-          -- NestJS
-          -- ============================================================
-
-          [".*%.controller%.ts"] = "controller",
-          [".*%.service%.ts"] = "service",
-          [".*%.module%.ts"] = "module",
-          [".*%.guard%.ts"] = "guard",
-          [".*%.interceptor%.ts"] = "interceptor",
-          [".*%.middleware%.ts"] = "middleware",
-          [".*%.resolver%.ts"] = "resolver",
-          [".*%.gateway%.ts"] = "gateway",
-          [".*%.provider%.ts"] = "provider",
-
-          -- ============================================================
-          -- Routes
-          -- ============================================================
-
-          [".*router%.ts"] = "router",
-          [".*routes%.ts"] = "route",
-          [".*route%.ts"] = "route",
-
-          -- ============================================================
-          -- Application / Entry points
-          -- ============================================================
-
-          [".*main%.ts"] = "main",
-          ["app.ts"] = "app",
-          ["index.ts"] = "index",
-
-          -- ============================================================
-          -- Authentication / Security
-          -- ============================================================
-
-          ["auth.ts"] = "auth",
-          [".*%.auth%.ts"] = "auth",
-          [".*%.auth%.tsx"] = "auth",
-
-          -- ============================================================
-          -- Context / Configuration
-          -- ============================================================
-
-          [".*context%.ts"] = "context",
-          [".*context%.tsx"] = "context",
-
-          [".*constants%.ts"] = "constants",
-          [".*constant%.ts"] = "constants",
-
-          [".*config%.ts"] = "config",
-          [".*configuration%.ts"] = "config",
-
-          -- ============================================================
-          -- DTO / Entity / Database
-          -- ============================================================
-
-          [".*%.dto%.ts"] = "dto",
-          [".*%.entity%.ts"] = "entity",
-          [".*%.schema%.ts"] = "schema",
-          [".*%.model%.ts"] = "model",
-          [".*%.repository%.ts"] = "repository",
-          [".*%.migration%.ts"] = "migration",
-
-          -- ============================================================
-          -- Types
-          -- ============================================================
-
-          [".*%.type%.ts"] = "type",
-          [".*%.types%.ts"] = "type",
-          [".*%.interface%.ts"] = "interface",
-
-          -- ============================================================
-          -- Decorators
-          -- ============================================================
-
-          [".*%.decorator%.ts"] = "decorator",
-          [".*%.decorators%.ts"] = "decorator",
-
-          -- ============================================================
-          -- Testing
-          -- ============================================================
-
-          [".*%.spec%.ts"] = "spec",
-          [".*%.test%.ts"] = "test",
-          [".*%.spec%.tsx"] = "spec",
-          [".*%.test%.tsx"] = "test",
-
-          -- ============================================================
-          -- React / Components
-          -- ============================================================
-
-          [".*%.component%.tsx"] = "component",
-          [".*%.component%.ts"] = "component",
-
-          [".*%.hook%.ts"] = "hook",
-          [".*%.hooks%.ts"] = "hook",
-
-          -- ============================================================
-          -- API
-          -- ============================================================
-
-          [".*%.api%.ts"] = "api",
-          [".*%.client%.ts"] = "client",
-          [".*%.request%.ts"] = "request",
-          [".*%.response%.ts"] = "response",
-
-          -- ============================================================
-          -- Utilities
-          -- ============================================================
-
-          [".*%.util%.ts"] = "util",
-          [".*%.utils%.ts"] = "util",
-          [".*%.helper%.ts"] = "helper",
-          [".*%.helpers%.ts"] = "helper",
-          [".*%.validator%.ts"] = "validator",
-          [".*%.validation%.ts"] = "validator",
-        },
-      })
-    end,
+    -- NOTE: no `init` / `vim.filetype.add()` here anymore.
+    -- Changing vim.filetype changes the REAL buffer filetype, which breaks
+    -- treesitter highlighting (no parser for a fake filetype like
+    -- "controller") and stops LSP clients from attaching (ts_ls/vtsls only
+    -- attach on filetype = "typescript" / "typescriptreact").
+    --
+    -- mini.icons has its own resolution system that never touches
+    -- `&filetype`, so we do all customization through `opts` instead:
+    --
+    --   * `extension` matches the WIDEST suffix after the FIRST dot.
+    --     e.g. for "auth.controller.ts" it tries "controller.ts" before "ts".
+    --     This is what covers all the NestJS-style `*.controller.ts` etc.
+    --   * `file` matches the exact basename (case sensitive).
+    --     This covers bare names like "router.ts", "auth.ts", "config.ts".
 
     opts = {
-      filetype = {
-
-        -- ============================================================
+      extension = {
         -- NestJS
-        -- ============================================================
+        ["controller.ts"] = { glyph = "󰒓", hl = "MiniIconsBlue" },
+        ["service.ts"] = { glyph = "", hl = "MiniIconsYellow" },
+        ["module.ts"] = { glyph = "󰏗", hl = "MiniIconsPurple" },
+        ["guard.ts"] = { glyph = "󰌋", hl = "MiniIconsRed" },
+        ["interceptor.ts"] = { glyph = "󰈈", hl = "MiniIconsCyan" },
+        ["middleware.ts"] = { glyph = "󰒍", hl = "MiniIconsOrange" },
+        ["resolver.ts"] = { glyph = "󰒉", hl = "MiniIconsGreen" },
+        ["gateway.ts"] = { glyph = "󰒍", hl = "MiniIconsAzure" },
+        ["provider.ts"] = { glyph = "󰒓", hl = "MiniIconsCyan" },
 
-        router = {
-          glyph = "󰑪",
-          hl = "MiniIconsAzure",
-        },
+        -- Routes
+        ["router.ts"] = { glyph = "󰑪", hl = "MiniIconsAzure" },
+        ["routes.ts"] = { glyph = "󱁙", hl = "MiniIconsAzure" },
+        ["route.ts"] = { glyph = "󱁙", hl = "MiniIconsAzure" },
 
-        route = {
-          glyph = "󱁙",
-          hl = "MiniIconsAzure",
-        },
+        -- Auth
+        ["auth.ts"] = { glyph = "󰒃", hl = "MiniIconsRed" },
+        ["auth.tsx"] = { glyph = "󰒃", hl = "MiniIconsRed" },
 
-        controller = {
-          glyph = "󰒓",
-          hl = "MiniIconsBlue",
-        },
+        -- Context / config
+        ["context.ts"] = { glyph = "󰆧", hl = "MiniIconsCyan" },
+        ["context.tsx"] = { glyph = "󰆧", hl = "MiniIconsCyan" },
+        ["constants.ts"] = { glyph = "󰏗", hl = "MiniIconsYellow" },
+        ["constant.ts"] = { glyph = "󰏗", hl = "MiniIconsYellow" },
+        ["config.ts"] = { glyph = "󰒓", hl = "MiniIconsOrange" },
+        ["configuration.ts"] = { glyph = "󰒓", hl = "MiniIconsOrange" },
 
-        service = {
-          glyph = "",
-          hl = "MiniIconsYellow",
-        },
+        -- DTO / entity / DB
+        ["dto.ts"] = { glyph = "󰗀", hl = "MiniIconsYellow" },
+        ["entity.ts"] = { glyph = "󰆼", hl = "MiniIconsPurple" },
+        ["schema.ts"] = { glyph = "󰙅", hl = "MiniIconsGreen" },
+        ["model.ts"] = { glyph = "󰆼", hl = "MiniIconsPurple" },
+        ["repository.ts"] = { glyph = "󰆼", hl = "MiniIconsBlue" },
+        ["migration.ts"] = { glyph = "󰆼", hl = "MiniIconsOrange" },
 
-        module = {
-          glyph = "󰏗",
-          hl = "MiniIconsPurple",
-        },
-
-        guard = {
-          glyph = "󰌋",
-          hl = "MiniIconsRed",
-        },
-
-        interceptor = {
-          glyph = "󰈈",
-          hl = "MiniIconsCyan",
-        },
-
-        middleware = {
-          glyph = "󰒍",
-          hl = "MiniIconsOrange",
-        },
-
-        resolver = {
-          glyph = "󰒉",
-          hl = "MiniIconsGreen",
-        },
-
-        gateway = {
-          glyph = "󰒍",
-          hl = "MiniIconsAzure",
-        },
-
-        provider = {
-          glyph = "󰒓",
-          hl = "MiniIconsCyan",
-        },
-
-        -- ============================================================
-        -- Application
-        -- ============================================================
-
-        main = {
-          glyph = "󰈔",
-          hl = "MiniIconsBlue",
-        },
-
-        app = {
-          glyph = "󰀻",
-          hl = "MiniIconsGreen",
-        },
-
-        index = {
-          glyph = "󰉋",
-          hl = "MiniIconsYellow",
-        },
-
-        -- ============================================================
-        -- Auth / Security
-        -- ============================================================
-
-        auth = {
-          glyph = "󰒃",
-          hl = "MiniIconsRed",
-        },
-
-        -- ============================================================
-        -- Context / Config
-        -- ============================================================
-
-        context = {
-          glyph = "󰆧",
-          hl = "MiniIconsCyan",
-        },
-
-        constants = {
-          glyph = "󰏗",
-          hl = "MiniIconsYellow",
-        },
-
-        config = {
-          glyph = "󰒓",
-          hl = "MiniIconsOrange",
-        },
-
-        -- ============================================================
-        -- Database
-        -- ============================================================
-
-        dto = {
-          glyph = "󰗀",
-          hl = "MiniIconsYellow",
-        },
-
-        entity = {
-          glyph = "󰆼",
-          hl = "MiniIconsPurple",
-        },
-
-        schema = {
-          glyph = "󰙅",
-          hl = "MiniIconsGreen",
-        },
-
-        model = {
-          glyph = "󰆼",
-          hl = "MiniIconsPurple",
-        },
-
-        repository = {
-          glyph = "󰆼",
-          hl = "MiniIconsBlue",
-        },
-
-        migration = {
-          glyph = "󰆼",
-          hl = "MiniIconsOrange",
-        },
-
-        -- ============================================================
         -- Types
-        -- ============================================================
+        ["type.ts"] = { glyph = "󰊕", hl = "MiniIconsPurple" },
+        ["types.ts"] = { glyph = "󰊕", hl = "MiniIconsPurple" },
+        ["interface.ts"] = { glyph = "󰜰", hl = "MiniIconsPurple" },
 
-        type = {
-          glyph = "󰊕",
-          hl = "MiniIconsPurple",
-        },
-
-        interface = {
-          glyph = "󰜰",
-          hl = "MiniIconsPurple",
-        },
-
-        -- ============================================================
         -- Decorators
-        -- ============================================================
+        ["decorator.ts"] = { glyph = "󰛢", hl = "MiniIconsRed" },
+        ["decorators.ts"] = { glyph = "󰛢", hl = "MiniIconsRed" },
 
-        decorator = {
-          glyph = "󰛢",
-          hl = "MiniIconsRed",
-        },
-
-        -- ============================================================
         -- Tests
-        -- ============================================================
+        ["spec.ts"] = { glyph = "", hl = "MiniIconsGreen" },
+        ["test.ts"] = { glyph = "", hl = "MiniIconsGreen" },
+        ["spec.tsx"] = { glyph = "", hl = "MiniIconsGreen" },
+        ["test.tsx"] = { glyph = "", hl = "MiniIconsGreen" },
 
-        spec = {
-          glyph = "",
-          hl = "MiniIconsGreen",
-        },
-
-        test = {
-          glyph = "",
-          hl = "MiniIconsGreen",
-        },
-
-        -- ============================================================
         -- React
-        -- ============================================================
+        ["component.tsx"] = { glyph = "󰡀", hl = "MiniIconsCyan" },
+        ["component.ts"] = { glyph = "󰡀", hl = "MiniIconsCyan" },
+        ["hook.ts"] = { glyph = "󰌷", hl = "MiniIconsPurple" },
+        ["hooks.ts"] = { glyph = "󰌷", hl = "MiniIconsPurple" },
 
-        component = {
-          glyph = "󰡀",
-          hl = "MiniIconsCyan",
-        },
-
-        hook = {
-          glyph = "󰌷",
-          hl = "MiniIconsPurple",
-        },
-
-        -- ============================================================
         -- API
-        -- ============================================================
+        ["api.ts"] = { glyph = "󰘳", hl = "MiniIconsBlue" },
+        ["client.ts"] = { glyph = "󰇰", hl = "MiniIconsCyan" },
+        ["request.ts"] = { glyph = "󰏪", hl = "MiniIconsYellow" },
+        ["response.ts"] = { glyph = "󰍉", hl = "MiniIconsGreen" },
 
-        api = {
-          glyph = "󰘳",
-          hl = "MiniIconsBlue",
-        },
-
-        client = {
-          glyph = "󰇰",
-          hl = "MiniIconsCyan",
-        },
-
-        request = {
-          glyph = "󰏪",
-          hl = "MiniIconsYellow",
-        },
-
-        response = {
-          glyph = "󰍉",
-          hl = "MiniIconsGreen",
-        },
-
-        -- ============================================================
         -- Utilities
-        -- ============================================================
+        ["util.ts"] = { glyph = "󰘧", hl = "MiniIconsAzure" },
+        ["utils.ts"] = { glyph = "󰘧", hl = "MiniIconsAzure" },
+        ["helper.ts"] = { glyph = "󰋗", hl = "MiniIconsCyan" },
+        ["helpers.ts"] = { glyph = "󰋗", hl = "MiniIconsCyan" },
+        ["validator.ts"] = { glyph = "󰒓", hl = "MiniIconsRed" },
+        ["validation.ts"] = { glyph = "󰒓", hl = "MiniIconsRed" },
+      },
 
-        util = {
-          glyph = "󰘧",
-          hl = "MiniIconsAzure",
-        },
+      -- Bare filenames (no prefix before the extension, e.g. just
+      -- "auth.ts" on its own) need an exact `file` entry, since the
+      -- `extension` resolver only fires when there's a prefix + dot
+      -- before the matched suffix (e.g. "x.auth.ts").
+      file = {
+        -- NestJS
+        ["controller.ts"] = { glyph = "󰒓", hl = "MiniIconsBlue" },
+        ["service.ts"] = { glyph = "", hl = "MiniIconsYellow" },
+        ["module.ts"] = { glyph = "󰏗", hl = "MiniIconsPurple" },
+        ["guard.ts"] = { glyph = "󰌋", hl = "MiniIconsRed" },
+        ["interceptor.ts"] = { glyph = "󰈈", hl = "MiniIconsCyan" },
+        ["middleware.ts"] = { glyph = "󰒍", hl = "MiniIconsOrange" },
+        ["resolver.ts"] = { glyph = "󰒉", hl = "MiniIconsGreen" },
+        ["gateway.ts"] = { glyph = "󰒍", hl = "MiniIconsAzure" },
+        ["provider.ts"] = { glyph = "󰒓", hl = "MiniIconsCyan" },
 
-        helper = {
-          glyph = "󰋗",
-          hl = "MiniIconsCyan",
-        },
+        -- Routes
+        ["router.ts"] = { glyph = "󰑪", hl = "MiniIconsAzure" },
+        ["routes.ts"] = { glyph = "󱁙", hl = "MiniIconsAzure" },
+        ["route.ts"] = { glyph = "󱁙", hl = "MiniIconsAzure" },
 
-        validator = {
-          glyph = "󰒓",
-          hl = "MiniIconsRed",
-        },
+        -- Auth
+        ["auth.ts"] = { glyph = "󰒃", hl = "MiniIconsRed" },
+        ["auth.tsx"] = { glyph = "󰒃", hl = "MiniIconsRed" },
+
+        -- Context / config
+        ["context.ts"] = { glyph = "󰆧", hl = "MiniIconsCyan" },
+        ["context.tsx"] = { glyph = "󰆧", hl = "MiniIconsCyan" },
+        ["constants.ts"] = { glyph = "󰏗", hl = "MiniIconsYellow" },
+        ["constant.ts"] = { glyph = "󰏗", hl = "MiniIconsYellow" },
+        ["config.ts"] = { glyph = "󰒓", hl = "MiniIconsOrange" },
+        ["configuration.ts"] = { glyph = "󰒓", hl = "MiniIconsOrange" },
+
+        -- DTO / entity / DB
+        ["dto.ts"] = { glyph = "󰗀", hl = "MiniIconsYellow" },
+        ["entity.ts"] = { glyph = "󰆼", hl = "MiniIconsPurple" },
+        ["schema.ts"] = { glyph = "󰙅", hl = "MiniIconsGreen" },
+        ["model.ts"] = { glyph = "󰆼", hl = "MiniIconsPurple" },
+        ["repository.ts"] = { glyph = "󰆼", hl = "MiniIconsBlue" },
+        ["migration.ts"] = { glyph = "󰆼", hl = "MiniIconsOrange" },
+
+        -- Types
+        ["type.ts"] = { glyph = "󰊕", hl = "MiniIconsPurple" },
+        ["types.ts"] = { glyph = "󰊕", hl = "MiniIconsPurple" },
+        ["interface.ts"] = { glyph = "󰜰", hl = "MiniIconsPurple" },
+
+        -- Decorators
+        ["decorator.ts"] = { glyph = "󰛢", hl = "MiniIconsRed" },
+        ["decorators.ts"] = { glyph = "󰛢", hl = "MiniIconsRed" },
+
+        -- Tests
+        ["spec.ts"] = { glyph = "", hl = "MiniIconsGreen" },
+        ["test.ts"] = { glyph = "", hl = "MiniIconsGreen" },
+        ["spec.tsx"] = { glyph = "", hl = "MiniIconsGreen" },
+        ["test.tsx"] = { glyph = "", hl = "MiniIconsGreen" },
+
+        -- React
+        ["component.tsx"] = { glyph = "󰡀", hl = "MiniIconsCyan" },
+        ["component.ts"] = { glyph = "󰡀", hl = "MiniIconsCyan" },
+        ["hook.ts"] = { glyph = "󰌷", hl = "MiniIconsPurple" },
+        ["hooks.ts"] = { glyph = "󰌷", hl = "MiniIconsPurple" },
+
+        -- API
+        ["api.ts"] = { glyph = "󰘳", hl = "MiniIconsBlue" },
+        ["client.ts"] = { glyph = "󰇰", hl = "MiniIconsCyan" },
+        ["request.ts"] = { glyph = "󰏪", hl = "MiniIconsYellow" },
+        ["response.ts"] = { glyph = "󰍉", hl = "MiniIconsGreen" },
+
+        -- Utilities
+        ["util.ts"] = { glyph = "󰘧", hl = "MiniIconsAzure" },
+        ["utils.ts"] = { glyph = "󰘧", hl = "MiniIconsAzure" },
+        ["helper.ts"] = { glyph = "󰋗", hl = "MiniIconsCyan" },
+        ["helpers.ts"] = { glyph = "󰋗", hl = "MiniIconsCyan" },
+        ["validator.ts"] = { glyph = "󰒓", hl = "MiniIconsRed" },
+        ["validation.ts"] = { glyph = "󰒓", hl = "MiniIconsRed" },
       },
     },
   },

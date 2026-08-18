@@ -1,8 +1,9 @@
 return {
   "stevearc/oil.nvim",
   ---@module 'oil'
-  ---@type oil.SetupOpts  
+  ---@type oil.SetupOpts
   opts = {
+    restore_winopts = false,
     -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`)
     -- Set to false if you want some other plugin (e.g. netrw) to open when you edit directories.
     -- Id is automatically added at the beginning, and name at the end
@@ -14,8 +15,8 @@ return {
       -- "mtime",
     },
     -- Buffer-local options to use for oil buffers
-   buf_options = {
-      buflisted = false,
+    buf_options = {
+      buflisted = true,
       bufhidden = "hide",
     },
     -- Window-local options to use for oil buffers
@@ -30,7 +31,7 @@ return {
       concealcursor = "nvic",
     },
     -- Send deleted files to the trash instead of permanently deleting them (:help oil-trash)
-    delete_to_trash = false,
+    delete_to_trash = true,
     -- Skip the confirmation popup for simple operations (:help oil.skip_confirm_for_simple_edits)
     skip_confirm_for_simple_edits = false,
     -- Selecting a new/moved/renamed file or directory will prompt you to save changes first
@@ -59,11 +60,12 @@ return {
       ["g?"] = { "actions.show_help", mode = "n" },
       ["<CR>"] = "actions.select",
       ["<C-s>"] = { "actions.select", opts = { vertical = true } },
-      
       -- 2. MAKE SURE BOTH OF THESE ARE SET TO FALSE RIGHT HERE:
       ["<C-h>"] = false,
       ["<C-l>"] = false,
-      
+
+      ["H"] = "<cmd>bprevious<cr>",
+      ["L"] = "<cmd>bnext<cr>",
       ["<C-t>"] = { "actions.select", opts = { tab = true } },
       ["<C-p>"] = "actions.preview",
       ["<C-c>"] = { "actions.close", mode = "n" },
