@@ -1,21 +1,6 @@
 return {
   {
-    "echasnovski/mini.icons",
-
-    -- NOTE: no `init` / `vim.filetype.add()` here anymore.
-    -- Changing vim.filetype changes the REAL buffer filetype, which breaks
-    -- treesitter highlighting (no parser for a fake filetype like
-    -- "controller") and stops LSP clients from attaching (ts_ls/vtsls only
-    -- attach on filetype = "typescript" / "typescriptreact").
-    --
-    -- mini.icons has its own resolution system that never touches
-    -- `&filetype`, so we do all customization through `opts` instead:
-    --
-    --   * `extension` matches the WIDEST suffix after the FIRST dot.
-    --     e.g. for "auth.controller.ts" it tries "controller.ts" before "ts".
-    --     This is what covers all the NestJS-style `*.controller.ts` etc.
-    --   * `file` matches the exact basename (case sensitive).
-    --     This covers bare names like "router.ts", "auth.ts", "config.ts".
+    "nvim-mini/mini.icons",
 
     opts = {
       extension = {
