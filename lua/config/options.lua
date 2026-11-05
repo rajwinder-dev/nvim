@@ -5,6 +5,7 @@
 --
 vim.g.root_spec = { "cwd" }
 
-vim.lsp.inlay_hint.enable(false)
-
+vim.g.lazyvim_inlay_hints = false
 vim.g.lazyvim_python_lsp = "basedpyright"
+
+vim.opt.autoread = true
